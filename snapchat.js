@@ -266,18 +266,17 @@ e.send = function send(username, auth_token, mediaId, friends, time, cb) {
  */
 e.updateSnap = function updateSnap(username, auth_token, snapid, added_friends_timestamp, time, cb) {
 	var ts = Date.now()+'';
-	var snapJson = {
-				snapid: {
-					c: 0,
-					t: ts,
-					replayed: 0
-				}
-	};
+	var snapJson = {};
+	snapJson[snapid] = {
+				c: 0,
+				t: ts,
+				replayed: 0
+			};
 	var postData = {
         username: username,
         timestamp:ts,
 				added_friends_timestamp: added_friends_timestamp,
-				json: snapJson,
+				json: JSON.stringify(snapJson),
 				events: "[]"
  	};	
 	if(typeof time != 'undefined') postData.time = time;
