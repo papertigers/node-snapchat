@@ -262,6 +262,33 @@ e.send = function send(username, auth_token, mediaId, friends, time, cb) {
 }
 
 /**
+ * Report snaps as viewed or screenshotted.
+ */
+e.updateSnap = function updateSnap(username, auth_token, snapid, added_friends_timestamp, time, cb) {
+	var ts = Date.now()+'';
+	var snapJson = {
+				snapid: {
+					c: 0,
+					t: ts,
+					replayed: 0
+				}
+	};
+	var postData = {
+        username: username,
+        timestamp:ts,
+				added_friends_timestamp: added_friends_timestamp,
+				json: snapJson,
+				events: "[]"
+ 	};	
+	if(typeof time != 'undefined') postData.time = time;
+	return e.postCall('/bq/update_snaps', postData, auth_token,ts).then(function(data) {
+		var resp = JSON.parse(data);
+		return(resp);
+	}).nodeify(cb);
+		
+}
+
+/**
  * Add a friend
  * @param  {String} username
  * @param  {String} auth_token

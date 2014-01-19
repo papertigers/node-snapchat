@@ -134,6 +134,13 @@ Client.prototype.send = function(mediaId,friends,timeOrCb,cb) {
     return sc.send(this.username,this.auth_token,mediaId,friends,time).nodeify(cb);
 };
 
+//e.updateSnap = function updateSnap(username, auth_token, snapid, added_friends_timestamp, cb) {
+Client.prototype.updateSnap = function(snapid, cb) {
+		return sc.updateSnap(this.username,this.auth_token,snapid,this.added_friends_timestamp).then(function(data) {
+			return data;
+		}).nodeify(cb);
+};
+
 /**
  * Add a friend
  * @param  {String}  friend Your friend's username
